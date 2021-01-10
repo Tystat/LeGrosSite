@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="LGC logo" width="200" src="./assets/logo_lgc_final.png">
-    <MainPage msg="Bienvenu sur le gros site !"/>
+    <MainPage/>
   </div>
 </template>
 
