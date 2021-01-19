@@ -52,8 +52,12 @@ export default {
       }).then((data) => {
         // `data` is the parsed version of the JSON returned from the above endpoint.
           console.log(data);
-          this.parsedInfos = data;
-          this.getDdragonVersion();
+          if(data.status===undefined){
+            this.parsedInfos = data;
+            this.getDdragonVersion();
+          } else {
+            this.parsedInfos = "";
+          }
       });
     }
   },
