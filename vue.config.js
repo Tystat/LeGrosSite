@@ -135,6 +135,14 @@ module.exports = {
           return replacedPath;
         }
       },
+      "^/api/ddragonVersion": {
+        target: "https://ddragon.leagueoflegends.com",
+        changeOrigin: true,
+        logLevel: "debug",
+        pathRewrite: function(path,req) {
+          return "/api/versions.json";
+        }
+      },
     }
   }
 };
