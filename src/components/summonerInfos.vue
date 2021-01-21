@@ -27,6 +27,12 @@ export default {
       ddragonVersion: 0
     }
   },
+  computed: {
+    //To detect if either has changed
+    summonerNameAndRegion: function (){
+      return(this.summonerName+this.summonerRegion);
+    }
+  },
   methods: {
     getDdragonVersion() {
       fetch('/api/ddragonVersion')
@@ -41,7 +47,8 @@ export default {
     }
   },
   watch: {
-    summonerName() {
+    //To detect if either has changed
+    summonerNameAndRegion() {
       console.log("updated");
 
       fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
