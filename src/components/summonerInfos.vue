@@ -40,7 +40,6 @@ export default {
         return response.json();
       }).then((data) => {
         // `data` is the parsed version of the JSON returned from the above endpoint.
-          console.log(data);
           this.ddragonVersion = data[0];
       });
 
@@ -49,23 +48,24 @@ export default {
   watch: {
     //To detect if either has changed
     summonerNameAndRegion() {
-      console.log("updated");
-
-      fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
-      .then((response) => {
-        // The response is a Response instance.
-        // You parse the data into a useable format using `.json()`
-        return response.json();
-      }).then((data) => {
-        // `data` is the parsed version of the JSON returned from the above endpoint.
-          console.log(data);
-          if(data.status===undefined){
-            this.parsedInfos = data;
-            this.getDdragonVersion();
-          } else {
-            this.parsedInfos = "";
-          }
-      });
+      //Prevent useless call to the API (usefull when component just mounted and summoner name or region not fully set)
+      if(this.summonerRegion!==undefined && this.summonerName!==undefined){
+        console.log(`API REQUEST SUMMONERINFOS -- ${this.summonerName}`)
+        fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
+        .then((response) => {
+          // The response is a Response instance.
+          // You parse the data into a useable format using `.json()`
+          return response.json();
+        }).then((data) => {
+          // `data` is the parsed version of the JSON returned from the above endpoint.
+            if(data.status===undefined){
+              this.parsedInfos = data;
+              this.getDdragonVersion();
+            } else {
+              this.parsedInfos = "";
+            }
+        });
+      }
     }
   },
   props: {
