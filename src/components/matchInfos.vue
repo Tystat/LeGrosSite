@@ -3,64 +3,74 @@
     <b-row>
             <b-col>
               <summonerInfos
-                :summonerName="summonersNames[0]"
+                :summonerName="summonersNamesBlue[0]"
                 :summonerRegion="summonerRegion"
+                color="primary"
               />
             </b-col>
             <b-col>
               <summonerInfos
-                :summonerName="summonersNames[1]"
+                :summonerName="summonersNamesBlue[1]"
                 :summonerRegion="summonerRegion"
+                color="primary"
               />
             </b-col>
             <b-col>
               <summonerInfos
-                :summonerName="summonersNames[2]"
+                :summonerName="summonersNamesBlue[2]"
                 :summonerRegion="summonerRegion"
+                color="primary"
               />
             </b-col>
             <b-col>
               <summonerInfos
-                :summonerName="summonersNames[3]"
+                :summonerName="summonersNamesBlue[3]"
                 :summonerRegion="summonerRegion"
+                color="primary"
               />
             </b-col>
             <b-col>
               <summonerInfos
-                :summonerName="summonersNames[4]"
+                :summonerName="summonersNamesBlue[4]"
                 :summonerRegion="summonerRegion"
+                color="primary"
               />
             </b-col>
           </b-row>
           <b-row>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNames[5]"
+                  :summonerName="summonersNamesRed[0]"
                   :summonerRegion="summonerRegion"
+                  color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNames[6]"
+                  :summonerName="summonersNamesRed[1]"
                   :summonerRegion="summonerRegion"
+                  color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNames[7]"
+                  :summonerName="summonersNamesRed[2]"
                   :summonerRegion="summonerRegion"
+                  color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNames[8]"
+                  :summonerName="summonersNamesRed[3]"
                   :summonerRegion="summonerRegion"
+                  color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNames[9]"
+                  :summonerName="summonersNamesRed[4]"
                   :summonerRegion="summonerRegion"
+                  color="danger"
                 />
               </b-col>
             </b-row>
@@ -75,7 +85,8 @@ export default {
   name: 'matchInfos',
   data: function() {
     return{
-      summonersNames: [],
+      summonersNamesRed: [],
+      summonersNamesBlue: []
     }
   },
   components: {
@@ -92,6 +103,8 @@ export default {
   watch: {
     //To detect if either has changed
     summonerNameAndRegion() {
+      this.summonersNamesRed = [];
+      this.summonersNamesBlue = [];
       console.log(`API REQUEST MATCHINFOS1 -- ${this.summonerName}`)
       fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
       .then((response) => {
@@ -108,7 +121,12 @@ export default {
             return matchResponse.json();
           }).then((matchData) => {
             // `data` is the parsed version of the JSON returned from the above endpoint.
-            matchData.participants.forEach(participant => this.summonersNames.push(participant.summonerName))
+            matchData.participants.forEach((participant) => {
+              if(participant.teamId === 100)
+                this.summonersNamesBlue.push(participant.summonerName);
+              else
+                this.summonersNamesRed.push(participant.summonerName);
+            })
           });
       });
     }
