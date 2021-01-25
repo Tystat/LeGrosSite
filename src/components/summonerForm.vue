@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import summonerInfos from './summonerInfos.vue'
 
 export default {
   name: 'summonerForm',
@@ -45,9 +44,6 @@ export default {
       event.preventDefault()
       this.$emit('formCompleted', {summonerName:this.summoner_name,summonerRegion:this.summoner_region})
     }
-  },
-  components: {
-    summonerInfos
   }
 }
 </script>
