@@ -99,11 +99,10 @@ export default {
     }
   },
   methods: {
-  },
-  watch: {
-    //To detect if either has changed
-    summonerNameAndRegion() {
-      this.summonersNamesRed = [];
+
+    getInfos(){
+      if(this.summonerRegion!==undefined && this.summonerName!==undefined){
+        this.summonersNamesRed = [];
       this.summonersNamesBlue = [];
       console.log(`API REQUEST MATCHINFOS1 -- ${this.summonerName}`)
       fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
@@ -129,6 +128,16 @@ export default {
             })
           });
       });
+      }
+    }
+  },
+  mounted(){
+    this.getInfos();
+  },
+  watch: {
+    //To detect if either has changed
+    summonerNameAndRegion() {
+      this.getInfos();
     }
   },
   props: {

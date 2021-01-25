@@ -44,8 +44,6 @@ export default {
       event.preventDefault()
       this.$emit('formCompleted', {summonerName:this.summoner_name,summonerRegion:this.summoner_region})
     }
-  },
-  components: {
   }
 }
 </script>
