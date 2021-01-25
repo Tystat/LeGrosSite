@@ -1,12 +1,15 @@
 <template>
   <div v-if="parsedInfos">
     <b-card
-     :title="parsedInfos.name"
      :img-src="'http://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/profileicon/'+parsedInfos.profileIconId+'.png'"
      img-alt="Image"
      img-top
      style="max-width: 20rem;"
      class="mb-2 text-dark mx-auto mt-5"
+     :header="parsedInfos.name"
+     :border-variant="color"
+     :header-bg-variant="color"
+     :header-text-variant="textColor"
      >
      <b-card-text class="text-dark">
        Awesome, you are lvl {{parsedInfos.summonerLevel}}!
@@ -31,6 +34,9 @@ export default {
     //To detect if either has changed
     summonerNameAndRegion: function (){
       return(this.summonerName+this.summonerRegion);
+    },
+    textColor: function() {
+      return this.color ? "white" : "";
     }
   },
   methods: {
@@ -57,6 +63,7 @@ export default {
             if(data.status===undefined){
               this.parsedInfos = data;
               this.getDdragonVersion();
+              console.log(this.parsedInfos);
             } else {
               this.parsedInfos = "";
             }
@@ -76,7 +83,8 @@ export default {
   },
   props: {
     summonerName: String,
-    summonerRegion: String
+    summonerRegion: String,
+    color: String
   }
 }
 </script>
