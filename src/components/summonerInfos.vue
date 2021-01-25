@@ -42,14 +42,10 @@ export default {
         // `data` is the parsed version of the JSON returned from the above endpoint.
           this.ddragonVersion = data[0];
       });
-
-    }
-  },
-  watch: {
-    //To detect if either has changed
-    summonerNameAndRegion() {
-      //Prevent useless call to the API (usefull when component just mounted and summoner name or region not fully set)
+    },
+    getInfos() {
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
+        
         console.log(`API REQUEST SUMMONERINFOS -- ${this.summonerName}`)
         fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
         .then((response) => {
@@ -66,6 +62,16 @@ export default {
             }
         });
       }
+    }
+  },
+  mounted(){
+    this.getInfos();
+  },
+  watch: {
+    //To detect if either has changed
+    summonerNameAndRegion() {
+      //Prevent useless call to the API (usefull when component just mounted and summoner name or region not fully set)
+      this.getInfos();
     }
   },
   props: {
