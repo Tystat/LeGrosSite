@@ -64,10 +64,17 @@ export default {
           return response.json();
         }).then((data) => {
           // `data` is the parsed version of the JSON returned from the above endpoint.
+          //https://ddragon.leagueoflegends.com/cdn/11.2.1/data/fr_FR/champion.json
+          //https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_4.jpg
             if(data.status===undefined){
               this.parsedInfos = data;
+              fetch(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`)
+              .then((masteries) => {
+                return masteries.json();
+              }).then((dataMasteries) => {
+                console.log(dataMasteries);
+              });
               this.getDdragonVersion();
-              console.log(this.parsedInfos);
             } else {
               this.parsedInfos = "";
             }
