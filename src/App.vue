@@ -1,20 +1,44 @@
 <template>
   <div id="app">
-    <img alt="LGC logo" width="200" src="./assets/logo_lgc_final.png">
-    <MainPage/>
+    <MainPage />	
+    <summonerForm 
+      @formCompleted="updateSummonerInfos"/>
+    <template>
+        <div id="app">
+          <nav>
+            <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}">Infos</router-link>
+            <router-link :to="{name: 'match', params: { summonerRegion: summonerRegion, summonerName: summonerName }}">Match</router-link>
+          </nav>
+          <router-view/>
+        </div>
+    </template>
   </div>
 </template>
 
 <script>
+import summonerForm from './components/summonerForm.vue'
 import MainPage from './components/MainPage.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export default {
   name: 'App',
+  data: function() {
+    return {
+      summonerName: null,
+      summonerRegion: null
+    }
+  },
   components: {
+    summonerForm,
     MainPage
-  }
+  },
+  methods: {
+    updateSummonerInfos(e) {
+      this.summonerName = e.summonerName;
+      this.summonerRegion = e.summonerRegion;
+    }
+  },
 }
 </script>
 
