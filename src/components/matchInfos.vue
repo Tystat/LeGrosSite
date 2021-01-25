@@ -75,7 +75,7 @@ export default {
   name: 'matchInfos',
   data: function() {
     return{
-      summonersNames: []
+      summonersNames: [],
     }
   },
   components: {

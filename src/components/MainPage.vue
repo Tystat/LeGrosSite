@@ -11,18 +11,24 @@
         :summonerName="summoner_name"
         :summonerRegion="summoner_region"
       />
+      <matchInfos
+        :summonerName="summoner_name"
+        :summonerRegion="summoner_region"
+      />
     </div>
 </template>
 
 <script>
 import summonerForm from './summonerForm.vue'
 import summonerInfos from './summonerInfos.vue'
+import matchInfos from './matchInfos.vue'
 
 export default {
   name: 'MainPage',
   components: {
     summonerForm,
-    summonerInfos
+    summonerInfos,
+    matchInfos
   },
   data() {
     return{
