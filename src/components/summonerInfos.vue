@@ -1,12 +1,12 @@
 <template>
   <div v-if="parsedInfos">
     <b-card
-     :title="parsedInfos.name"
      :img-src="'http://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/profileicon/'+parsedInfos.profileIconId+'.png'"
      img-alt="Image"
      img-top
      style="max-width: 20rem;"
      class="mb-2 text-dark mx-auto mt-5"
+     :header="parsedInfos.name"
      >
      <b-card-text class="text-dark">
        Awesome, you are lvl {{parsedInfos.summonerLevel}}!
@@ -61,6 +61,7 @@ export default {
             if(data.status===undefined){
               this.parsedInfos = data;
               this.getDdragonVersion();
+              console.log(this.parsedInfos);
             } else {
               this.parsedInfos = "";
             }
