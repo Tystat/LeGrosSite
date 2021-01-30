@@ -16,6 +16,9 @@
      </b-card-text>
    </b-card>
   </div>
+  <div v-else>
+    Veuillez entrez un nom d'invocateur valide pour la région choisie
+  </div>
 </template>
 
 <script>
@@ -51,7 +54,7 @@ export default {
     },
     getInfos() {
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
-        
+
         console.log(`API REQUEST SUMMONERINFOS -- ${this.summonerName}`)
         fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
         .then((response) => {
