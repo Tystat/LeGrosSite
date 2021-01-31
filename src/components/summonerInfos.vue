@@ -22,7 +22,7 @@
 </template>
 
 <script>
-
+import {globalAPIQueu} from '../main.js'
 
 
 export default {
@@ -55,29 +55,38 @@ export default {
     getInfos() {
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
 
-        console.log(`API REQUEST SUMMONERINFOS -- ${this.summonerName}`)
-        fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
-        .then((response) => {
-          // The response is a Response instance.
-          // You parse the data into a useable format using `.json()`
-          return response.json();
-        }).then((data) => {
-          // `data` is the parsed version of the JSON returned from the above endpoint.
-          //https://ddragon.leagueoflegends.com/cdn/11.2.1/data/fr_FR/champion.json
-          //https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_4.jpg
+        console.log(`API REQUEST BASIC SUMMONERINFOS -- ${this.summonerName}`)
+        globalAPIQueu.APIRequests += 1;
+        setTimeout(()=>{
+          fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
+          .then((response) => {
+            // The response is a Response instance.
+            // You parse the data into a useable format using `.json()`
+            globalAPIQueu.APIRequests -= 1;
+            return response.json();
+          }).then((data) => {
+            // `data` is the parsed version of the JSON returned from the above endpoint.
+            //https://ddragon.leagueoflegends.com/cdn/11.2.1/data/fr_FR/champion.json
+            //https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_4.jpg
             if(data.status===undefined){
               this.parsedInfos = data;
-              fetch(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`)
-              .then((masteries) => {
-                return masteries.json();
-              }).then((dataMasteries) => {
-                console.log(dataMasteries);
-              });
+              console.log(`API REQUEST ADVANSUMMONERINFOS -- ${this.summonerName}`)
+              globalAPIQueu.APIRequests += 1;
+              setTimeout(()=>{
+                fetch(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`)
+                .then((masteries) => {
+                  globalAPIQueu.APIRequests -= 1;
+                  return masteries.json();
+                }).then((dataMasteries) => {
+                  console.log(dataMasteries);
+                });
+              }, 50*globalAPIQueu.APIRequests);
               this.getDdragonVersion();
             } else {
               this.parsedInfos = "";
             }
-        });
+          });
+        }, 50*globalAPIQueu.APIRequests);
       }
     }
   },
