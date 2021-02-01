@@ -1,17 +1,29 @@
 <template>
-  <div id="app">
-    <MainPage />	
-    <summonerForm 
-      @formCompleted="updateSummonerInfos"/>
-    <template>
-        <div id="app">
-          <nav>
-            <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}">Infos</router-link>
-            <router-link :to="{name: 'match', params: { summonerRegion: summonerRegion, summonerName: summonerName }}">Match</router-link>
-          </nav>
-          <router-view/>
-        </div>
-    </template>
+  <div id="app" class="mt-0">
+    <div class="row">
+      <div class="col-1" style="background-color: #1c2e40">
+        <ul class="nav nav-pills justify-content-center flex-column">
+          <li class="nav-item m-3">
+            <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
+              class="nav-link">
+              Infos
+            </router-link>
+          </li>
+          <li class="nav-item m-3">
+            <router-link :to="{name: 'match', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
+              class="nav-link">
+              Match
+            </router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="col-11 mt-3">
+        <MainPage />
+        <summonerForm 
+          @formCompleted="updateSummonerInfos"/>
+        <router-view/>
+      </div>
+    </div>
   </div>
 </template>
 
