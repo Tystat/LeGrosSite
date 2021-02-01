@@ -143,6 +143,14 @@ module.exports = {
           return "/api/versions.json";
         }
       },
+      "^/api/ddragonChampions": {
+        target: "https://ddragon.leagueoflegends.com",
+        changeOrigin: true,
+        logLevel: "debug",
+        pathRewrite: function(path,req) {
+          return "/cdn/11.2.1/data/en_US/champion.json";
+        }
+      },
     }
   }
 };

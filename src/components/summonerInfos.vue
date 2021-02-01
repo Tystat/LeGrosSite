@@ -6,15 +6,18 @@
      img-top
      style="max-width: 20rem;"
      class="mb-2 text-dark mx-auto mt-5"
-     :header="parsedInfos.name"
+     :header="parsedInfos.name + ' : ' + parsedInfos.summonerLevel"
      :border-variant="color"
      :header-bg-variant="color"
      :header-text-variant="textColor"
-     >
-     <b-card-text class="text-dark">
-       Awesome, you are lvl {{parsedInfos.summonerLevel}}!
-     </b-card-text>
-   </b-card>
+    >
+      <b-card-text class="text-dark">
+       <li v-for="champ in bestChamps" :key="champ.mastery">
+         <img :src="'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+champ.name+'.png'" width="15%"/>
+         {{champ.name}} || Mastery {{champ.mastery}} : {{champ.points}} pts
+       </li>
+      </b-card-text>
+    </b-card>
   </div>
   <div v-else>
     Veuillez entrez un nom d'invocateur valide pour la région choisie
@@ -30,6 +33,7 @@ export default {
   data: function() {
     return{
       parsedInfos: "",
+      bestChamps: [],
       ddragonVersion: 0
     }
   },
@@ -40,7 +44,7 @@ export default {
     },
     textColor: function() {
       return this.color ? "white" : "";
-    }
+    },
   },
   methods: {
     getDdragonVersion() {
@@ -54,7 +58,7 @@ export default {
     },
     getInfos() {
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
-
+        this.bestChamps = [];
         console.log(`API REQUEST BASIC SUMMONERINFOS -- ${this.summonerName}`)
         globalAPIQueu.APIRequests += 1;
         setTimeout(()=>{
@@ -78,7 +82,19 @@ export default {
                   globalAPIQueu.APIRequests -= 1;
                   return masteries.json();
                 }).then((dataMasteries) => {
-                  console.log(dataMasteries);
+                  fetch('/api/ddragonChampions')
+                  .then((champions) => {
+                    return champions.json();
+                  }).then((championsData) => {
+                    for(var champion in championsData.data) {
+                      if(championsData.data[champion].key == dataMasteries[0].championId)
+                        this.bestChamps.push({name: champion, mastery: dataMasteries[0].championLevel, points :dataMasteries[0].championPoints});
+                      if(championsData.data[champion].key == dataMasteries[1].championId)
+                        this.bestChamps.push({name: champion, mastery: dataMasteries[1].championLevel, points :dataMasteries[1].championPoints});
+                      if(championsData.data[champion].key == dataMasteries[2].championId)
+                        this.bestChamps.push({name: champion, mastery: dataMasteries[2].championLevel, points :dataMasteries[2].championPoints});
+                    }
+                  });
                 });
               }, 50*globalAPIQueu.APIRequests);
               this.getDdragonVersion();
