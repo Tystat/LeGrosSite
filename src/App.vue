@@ -1,23 +1,29 @@
 <template>
   <div id="app" class="mt-0">
-    <b-container>
+    <b-row>
 
       <!-- Sidebar -->
       <b-col style="background-color: #1c2e40">
         <ul class="nav nav-pills justify-content-center flex-column">
           <li class="nav-item m-2">
             <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
-              class="nav-link">
+              class="list-group-item list-group-item-action bg-light">
               <div class="h3"> Infos </div>
             </router-link>
           </li>
           <li class="nav-item m-2">
             <router-link :to="{name: 'match', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
-              class="nav-link">
+              class="list-group-item list-group-item-action bg-light">
               <div class="h3"> Match </div>
             </router-link>
           </li>
         </ul>
+        <div id="Credits">
+          <p id="title">Credits : </p>
+          <p id="text">Thomas Tabuteau <br> Jean-Baptiste Martineau <br> Adrien Chotard <br> Laura Texier <br></p>
+          <a href="https://github.com/Tystat/LeGrosSite" id="text"> <img src="./assets/GitHub_Logo.png" alt="GitHub" height="30%" width="30%"> </a>
+        </div>
+        
       </b-col>
       
       <!-- Body -->
@@ -27,7 +33,7 @@
           @formCompleted="updateSummonerInfos"/>
         <router-view/>
       </b-col>
-    </b-container>
+    </b-row>
   </div>
 </template>
 
@@ -70,4 +76,15 @@ export default {
 body {
   background-color: #2c3e50;
 }
+#Credit{
+  position:absolute;
+  bottom:0;
+}
+#title{
+  font-size:18px;
+}
+#text{
+  font-size:13px;
+}
+
 </style>
