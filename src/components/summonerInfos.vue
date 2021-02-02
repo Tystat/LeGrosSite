@@ -1,22 +1,95 @@
 <template>
   <div v-if="parsedInfos">
     <b-card
-     :img-src="'http://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/profileicon/'+parsedInfos.profileIconId+'.png'"
-     img-alt="Image"
-     img-top
-     style="max-width: 20rem;"
+     no-body
+     style="max-width: 18rem; min-width: 18rem;"
      class="mb-2 text-dark mx-auto mt-5"
-     :header="parsedInfos.name + ' : ' + parsedInfos.summonerLevel"
-     :border-variant="color"
-     :header-bg-variant="color"
-     :header-text-variant="textColor"
+     :header="parsedInfos.name"
+     :border-variant="headerColor"
+     :header-bg-variant="headerColor"
+     header-text-variant="white"
     >
-      <b-card-text class="text-dark">
-       <li v-for="champ in bestChamps" :key="champ.name">
-         <img :src="'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+champ.name+'.png'" width="15%"/>
-         {{champ.name}} || Mastery {{champ.mastery}} : {{champ.points}} pts
-       </li>
-      </b-card-text>
+    <div>
+      <b-img left height="100%" :src="'http://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/profileicon/'+parsedInfos.profileIconId+'.png'"></b-img>
+      <p class="mt-3">
+        Level : {{parsedInfos.summonerLevel}}
+      </p>
+      <p>
+        Last activity : {{readableDate}}
+      </p>
+    </div>
+    <b-card-footer footer-bg-variant="dark" footer-text-variant="white">Ranks</b-card-footer>
+
+    <b-list-group flush>
+
+      <b-list-group-item class="py-1">
+
+        <b-row no-gutters class="py-0">
+
+          <b-col class="my-auto">
+            SOLO/DUO
+          </b-col>
+
+          <b-col class="my-auto">
+            MASTER
+          </b-col>
+
+          <b-col class="my-auto">
+            150 games
+          </b-col>
+
+        </b-row>
+
+      </b-list-group-item>
+
+      <b-list-group-item class="py-1">
+
+        <b-row no-gutters class="py-0">
+
+          <b-col class="my-auto">
+            FLEX
+          </b-col>
+
+          <b-col class="my-auto">
+              GRAND MASTER
+          </b-col>
+
+          <b-col class="my-auto">
+            150 games
+          </b-col>
+
+        </b-row>
+
+      </b-list-group-item>
+
+    </b-list-group>
+
+      <b-card-footer footer-bg-variant="dark" footer-text-variant="white">Champion Masteries</b-card-footer>
+
+      <b-list-group flush>
+
+        <b-list-group-item v-for="champ in bestChamps" :key="champ.name" class="py-1">
+
+          <b-row no-gutters class="py-0">
+
+            <b-col class="my-auto">
+              <img :src="'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+champ.name+'.png'" width="50%"/>
+            </b-col>
+
+            <b-col class="my-auto">
+                Mastery {{champ.mastery}}
+            </b-col>
+
+            <b-col class="my-auto">
+              {{champ.points}} pts
+            </b-col>
+
+          </b-row>
+
+        </b-list-group-item>
+
+      </b-list-group>
+
     </b-card>
   </div>
   <div v-else>
@@ -42,8 +115,12 @@ export default {
     summonerNameAndRegion: function (){
       return(this.summonerName+this.summonerRegion);
     },
-    textColor: function() {
-      return this.color ? "white" : "";
+    headerColor: function() {
+      return this.color ? this.color : "dark";
+    },
+    readableDate: function() {
+      var date = new Date(this.parsedInfos.revisionDate);
+      return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
     },
   },
   methods: {

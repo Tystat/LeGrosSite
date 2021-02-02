@@ -1,35 +1,35 @@
 <template>
-  <b-container v-if="summonersNamesRed[0] || summonersNamesBlue[0]">
-    <b-row>
-            <b-col>
+  <b-container fluid class="w-75" v-if="summonersNamesRed[0] || summonersNamesBlue[0]">
+    <b-row no-gutters>
+            <b-col no-gutters>
               <summonerInfos
                 :summonerName="summonersNamesBlue[0]"
                 :summonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
-            <b-col>
+            <b-col no-gutters>
               <summonerInfos
                 :summonerName="summonersNamesBlue[1]"
                 :summonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
-            <b-col>
+            <b-col no-gutters>
               <summonerInfos
                 :summonerName="summonersNamesBlue[2]"
                 :summonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
-            <b-col>
+            <b-col no-gutters>
               <summonerInfos
                 :summonerName="summonersNamesBlue[3]"
                 :summonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
-            <b-col>
+            <b-col no-gutters>
               <summonerInfos
                 :summonerName="summonersNamesBlue[4]"
                 :summonerRegion="summonerRegion"
