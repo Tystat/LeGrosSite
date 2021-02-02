@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="mt-0">
-    <div class="row">
+    <b-container>
 
       <!-- Sidebar -->
-      <div class="col-1" style="background-color: #1c2e40">
+      <b-col style="background-color: #1c2e40">
         <ul class="nav nav-pills justify-content-center flex-column">
           <li class="nav-item m-2">
             <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
@@ -18,16 +18,16 @@
             </router-link>
           </li>
         </ul>
-      </div>
+      </b-col>
       
       <!-- Body -->
-      <div class="col-11 mt-3">
+      <b-col cols="10">
         <MainPage />
         <summonerForm 
           @formCompleted="updateSummonerInfos"/>
         <router-view/>
-      </div>
-    </div>
+      </b-col>
+    </b-container>
   </div>
 </template>
 
