@@ -68,19 +68,20 @@
 
       <b-list-group flush>
 
-        <b-list-group-item v-for="champ in bestChamps" :key="champ.name" class="py-1">
+        <b-list-group-item v-for="champ in bestChamps" :key="champ.name" class="py-1 px-2">
 
           <b-row no-gutters class="py-0">
 
             <b-col class="my-auto">
-              <img :src="'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+champ.name+'.png'" width="50%"/>
+              <b-img left :src="'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+champ.name+'.png'" width="50%"/>
             </b-col>
 
             <b-col class="my-auto">
                 Mastery {{champ.mastery}}
+                <b-img :src="champ.mastery>=4 ? 'http://raw.communitydragon.org/11.2/game/assets/ux/mastery/mastery_icon_'+champ.mastery+'.png' : 'http://raw.communitydragon.org/11.2/game/assets/ux/mastery/mastery_icon_default.png'" width="50%"/>
             </b-col>
 
-            <b-col class="my-auto">
+            <b-col class="my-auto text-right">
               {{champ.points}} pts
             </b-col>
 
