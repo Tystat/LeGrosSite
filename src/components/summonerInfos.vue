@@ -12,7 +12,7 @@
      :header-text-variant="textColor"
     >
       <b-card-text class="text-dark">
-       <li v-for="champ in bestChamps" :key="champ.mastery">
+       <li v-for="champ in bestChamps" :key="champ.name">
          <img :src="'https://ddragon.leagueoflegends.com/cdn/'+ddragonVersion+'/img/champion/'+champ.name+'.png'" width="15%"/>
          {{champ.name}} || Mastery {{champ.mastery}} : {{champ.points}} pts
        </li>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {globalAPIQueu} from '../main.js'
+import {riotAPICall} from '../library.js'
 
 
 export default {
@@ -57,54 +57,46 @@ export default {
       });
     },
     getInfos() {
+      //Execute only if the summoner region or summonerName has changed
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
+        //Clear the bestChamps if any is stored
         this.bestChamps = [];
         console.log(`API REQUEST BASIC SUMMONERINFOS -- ${this.summonerName}`)
-        globalAPIQueu.APIRequests += 1;
-        setTimeout(()=>{
-          fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
-          .then((response) => {
-            // The response is a Response instance.
-            // You parse the data into a useable format using `.json()`
-            globalAPIQueu.APIRequests -= 1;
-            return response.json();
-          }).then((data) => {
-            // `data` is the parsed version of the JSON returned from the above endpoint.
-            //https://ddragon.leagueoflegends.com/cdn/11.2.1/data/fr_FR/champion.json
-            //https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_4.jpg
-            if(data.status===undefined){
-              this.parsedInfos = data;
-              console.log(`API REQUEST ADVANSUMMONERINFOS -- ${this.summonerName}`)
-              globalAPIQueu.APIRequests += 1;
-              setTimeout(()=>{
-                fetch(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`)
-                .then((masteries) => {
-                  globalAPIQueu.APIRequests -= 1;
-                  return masteries.json();
-                }).then((dataMasteries) => {
-                  fetch('/api/ddragonChampions')
-                  .then((champions) => {
-                    return champions.json();
-                  }).then((championsData) => {
-                    for(var champion in championsData.data) {
-                      if(championsData.data[champion].key == dataMasteries[0].championId)
-                        this.bestChamps.push({name: champion, mastery: dataMasteries[0].championLevel, points :dataMasteries[0].championPoints});
-                      if(championsData.data[champion].key == dataMasteries[1].championId)
-                        this.bestChamps.push({name: champion, mastery: dataMasteries[1].championLevel, points :dataMasteries[1].championPoints});
-                      if(championsData.data[champion].key == dataMasteries[2].championId)
-                        this.bestChamps.push({name: champion, mastery: dataMasteries[2].championLevel, points :dataMasteries[2].championPoints});
-                    }
-                  });
-                });
-              }, 50*globalAPIQueu.APIRequests);
-              this.getDdragonVersion();
-            } else {
-              this.parsedInfos = "";
-            }
-          });
-        }, 50*globalAPIQueu.APIRequests);
+        //Request the summoner data from Riot
+        riotAPICall(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`,(dataSummoner) => {
+          //If a summoner is found (status object is only return if no summoner was found)
+          if(dataSummoner.status===undefined){
+            //Store the summoner data
+            this.parsedInfos = dataSummoner;
+            console.log(`API REQUEST ADVANSUMMONERINFOS -- ${this.summonerName}`)
+            //Request the mastery infos from Riot
+            riotAPICall(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`,(dataMasteries) => {
+              //Request the list of champion from Data Dragon (no limit on the number of call so we don't use riotAPICall())
+              fetch('/api/ddragonChampions')
+              .then((champions) => {
+                //Parse the API response
+                return champions.json();
+              }).then((championsData) => {
+                //Store the three champions with the highest mastery
+                for(var champion in championsData.data) {
+                  if(championsData.data[champion].key == dataMasteries[0].championId)
+                    this.bestChamps.push({name: champion, mastery: dataMasteries[0].championLevel, points :dataMasteries[0].championPoints});
+                  if(championsData.data[champion].key == dataMasteries[1].championId)
+                    this.bestChamps.push({name: champion, mastery: dataMasteries[1].championLevel, points :dataMasteries[1].championPoints});
+                  if(championsData.data[champion].key == dataMasteries[2].championId)
+                    this.bestChamps.push({name: champion, mastery: dataMasteries[2].championLevel, points :dataMasteries[2].championPoints});
+                }
+              });
+            });
+            //Request the data dragon version as it is needed for the summoner icon
+            this.getDdragonVersion();
+          } else {
+            //If no summoner was found we clear the current summoner infos
+            this.parsedInfos = "";
+          }
+        });
       }
-    }
+    },
   },
   mounted(){
     this.getInfos();
