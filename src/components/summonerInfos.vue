@@ -72,20 +72,31 @@ export default {
             //Request the mastery infos from Riot
             riotAPICall(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`,(dataMasteries) => {
               //Request the list of champion from Data Dragon (no limit on the number of call so we don't use riotAPICall())
+
+              //Sort the dataMasteries array to be sorted by mastery level then mastery point if the masteries are the same (currently sorted only by championPoints)
+              dataMasteries.sort(function(a,b) {
+                var x = b.championLevel-a.championLevel;
+                return x==0 ? b.championPoints-a.championPoints : x;
+              });
               fetch('/api/ddragonChampions')
               .then((champions) => {
                 //Parse the API response
                 return champions.json();
-              }).then((championsData) => {
+              }).then((dataChampions) => {
                 //Store the three champions with the highest mastery
-                for(var champion in championsData.data) {
-                  if(championsData.data[champion].key == dataMasteries[0].championId)
+                for(var champion in dataChampions.data) {
+                  if(dataChampions.data[champion].key == dataMasteries[0].championId)
                     this.bestChamps.push({name: champion, mastery: dataMasteries[0].championLevel, points :dataMasteries[0].championPoints});
-                  if(championsData.data[champion].key == dataMasteries[1].championId)
+                  if(dataChampions.data[champion].key == dataMasteries[1].championId)
                     this.bestChamps.push({name: champion, mastery: dataMasteries[1].championLevel, points :dataMasteries[1].championPoints});
-                  if(championsData.data[champion].key == dataMasteries[2].championId)
+                  if(dataChampions.data[champion].key == dataMasteries[2].championId)
                     this.bestChamps.push({name: champion, mastery: dataMasteries[2].championLevel, points :dataMasteries[2].championPoints});
                 }
+                //Sort the bestChamps array to be sorted by mastery level then mastery point if the masteries are the same (currently sorted alphabetically because dataChampions is sorted alphabetically)
+                this.bestChamps.sort(function(a,b) {
+                  var x = b.mastery-a.mastery;
+                  return x==0 ? b.points-a.points : x;
+                });
               });
             });
             //Request the data dragon version as it is needed for the summoner icon
