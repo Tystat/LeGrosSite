@@ -135,20 +135,15 @@ module.exports = {
           return replacedPath;
         }
       },
-      "^/api/ddragonVersion": {
+      "^/api/DD": {
         target: "https://ddragon.leagueoflegends.com",
         changeOrigin: true,
         logLevel: "debug",
         pathRewrite: function(path,req) {
-          return "/api/versions.json";
-        }
-      },
-      "^/api/ddragonChampions": {
-        target: "https://ddragon.leagueoflegends.com",
-        changeOrigin: true,
-        logLevel: "debug",
-        pathRewrite: function(path,req) {
-          return "/cdn/11.2.1/data/en_US/champion.json";
+          var replacedPath = path;
+          replacedPath = path.replace('/api/DD/','/');
+          console.log(`Replaced ${path} with ${replacedPath}`);
+          return replacedPath;
         }
       },
     }

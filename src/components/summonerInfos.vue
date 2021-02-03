@@ -78,7 +78,7 @@
 
             <b-col class="my-auto">
                 Mastery {{champ.mastery}}
-                <b-img :src="champ.mastery>=4 ? 'http://raw.communitydragon.org/11.2/game/assets/ux/mastery/mastery_icon_'+champ.mastery+'.png' : 'http://raw.communitydragon.org/11.2/game/assets/ux/mastery/mastery_icon_default.png'" width="50%"/>
+                <b-img :src="champ.mastery>=4 ? 'https://raw.communitydragon.org/latest/game/assets/ux/mastery/mastery_icon_'+champ.mastery+'.png' : 'https://raw.communitydragon.org/latest/game/assets/ux/mastery/mastery_icon_default.png'" width="50%"/>
             </b-col>
 
             <b-col class="my-auto text-right">
@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     getDdragonVersion() {
-      fetch('/api/ddragonVersion')
+      fetch('/api/DD/api/versions.json')
       .then((response) => {
         return response.json();
       }).then((data) => {
@@ -156,7 +156,7 @@ export default {
                 var x = b.championLevel-a.championLevel;
                 return x==0 ? b.championPoints-a.championPoints : x;
               });
-              fetch('/api/ddragonChampions')
+              fetch(`/api/DD/cdn/${this.ddragonVersion}/data/en_US/champion.json`)
               .then((champions) => {
                 //Parse the API response
                 return champions.json();
