@@ -27,6 +27,7 @@
           @formCompleted="updateSummonerInfos"/>
         <router-view/>
       </b-col>
+      <champion-rotation :summonerRegion="summonerRegion" />
     </b-container>
   </div>
 </template>
@@ -34,6 +35,7 @@
 <script>
 import summonerForm from './components/summonerForm.vue'
 import MainPage from './components/MainPage.vue'
+import championRotation from './components/championRotation.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -47,7 +49,8 @@ export default {
   },
   components: {
     summonerForm,
-    MainPage
+    MainPage,
+    championRotation
   },
   methods: {
     updateSummonerInfos(e) {
