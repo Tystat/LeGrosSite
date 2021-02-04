@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import summonerInfos from "./components/summonerInfos.vue";
-import matchInfos from "./components/matchInfos.vue"
+import matchInfos from "./components/matchInfos.vue";
+import summonerMasteries from "./components/summonerMasteries.vue"
  
 Vue.use(Router);
  
@@ -13,7 +14,7 @@ export default new Router({
     {
         path: "/:summonerRegion/:summonerName",
         name: "infos",
-        alias: "/infos", // go '/', the URL remains '/', but it wcill be matched if visiting '/customer'
+        alias: "/infos",
         component: summonerInfos,
         props: true
     },
@@ -21,6 +22,12 @@ export default new Router({
         path: "/match/:summonerRegion/:summonerName",
         name: "match",
         component: matchInfos,
+        props: true
+    },
+    {
+        path: "/masteries/:summonerRegion/:summonerName",
+        name: "masteries",
+        component: summonerMasteries,
         props: true
     }
   ]
