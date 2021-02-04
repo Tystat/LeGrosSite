@@ -111,7 +111,7 @@ export default {
   name: 'summonerInfos',
   data: function() {
     return{
-      parsedInfos: {},
+      parsedInfos: undefined,
       bestChamps: [],
       ranks: {"RANKED_FLEX_SR":{},"RANKED_SOLO_5x5":{}},
       ddragonVersion: 0
@@ -191,7 +191,7 @@ export default {
             this.getDdragonVersion();
           } else {
             //If no summoner was found we clear the current summoner infos
-            this.parsedInfos = "";
+            this.parsedInfos = undefined;
           }
         });
       }
