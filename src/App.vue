@@ -33,12 +33,8 @@
           @formCompleted="updateSummonerInfos"/>
         <router-view/>
       </b-col>
-<<<<<<< HEAD
-    </b-row>
-=======
       <champion-rotation :summonerRegion="summonerRegion" />
-    </b-container>
->>>>>>> 5808f0f50b93a84f9f72012d3f90ed68d21a9913
+    </b-row>
   </div>
 </template>
 
