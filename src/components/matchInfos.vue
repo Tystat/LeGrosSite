@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="w-75" v-if="summonersNamesRed[0] || summonersNamesBlue[0]">
+  <div v-if="summonersNamesRed[0] || summonersNamesBlue[0]">
     <b-row no-gutters>
             <b-col no-gutters>
               <summonerInfos
@@ -74,7 +74,7 @@
                 />
               </b-col>
             </b-row>
-  </b-container>
+  </div>
   <div v-else>
     Pas de match trouvé pour cet invocateur
   </div>
