@@ -3,7 +3,7 @@
   <div v-if="parsedInfos">
     <b-card
      no-body
-     style="max-width: 18rem; min-width: 18rem;"
+     style="max-width: 16rem; min-width: 16rem;"
      class="mb-2 text-dark mx-auto mt-5"
      :header="parsedInfos.name"
      :border-variant="this.color ? this.color : 'dark'"
@@ -124,7 +124,7 @@ export default {
     },
     readableDate: function() {
       var date = new Date(this.parsedInfos.revisionDate);
-      return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+      return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()-2000}`;
     },
   },
   methods: {
