@@ -17,6 +17,12 @@
               <div class="h3"> Match </div>
             </router-link>
           </li>
+          <li class="nav-item m-2">
+            <router-link :to="{name: 'masteries', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
+              class="list-group-item list-group-item-action bg-light">
+              <div class="h3"> Masteries </div>
+            </router-link>
+          </li>
         </ul>
         <div id="Credits">
           <p id="title">Credits : </p>
