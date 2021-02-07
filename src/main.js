@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import router from './router'
 
 // number of api request in the queue
@@ -14,7 +14,9 @@ export const globalAPIQueu = new Vue({
 })
 
 Vue.config.productionTip = false;
-Vue.use(BootstrapVue);
+
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 new Vue({
   router,
