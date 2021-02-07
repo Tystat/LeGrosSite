@@ -3,7 +3,7 @@
     <b-row>
 
       <!-- Sidebar -->
-      <b-col style="background-color: #1c2e40">
+      <b-col style="background-color: #1c2e40" cols="2">
         <ul class="nav nav-pills justify-content-center flex-column">
           <li class="nav-item m-2">
             <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
@@ -20,7 +20,7 @@
           <li class="nav-item m-2">
             <router-link :to="{name: 'masteries', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
               class="list-group-item list-group-item-action bg-light">
-              <div class="h3"> Masteries </div>
+              <div class="h3"> Maîtrises </div>
             </router-link>
           </li>
         </ul>
