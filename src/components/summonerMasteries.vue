@@ -1,6 +1,6 @@
 <template>
     <div class="summonerMasteries">
-        <b-card 
+        <b-card
         class="mb-2 text-dark mx-auto mt-5">
             <b-card-header class="text-reset">Maitrises</b-card-header>
             <b-card-body>
@@ -46,7 +46,7 @@ export default {
     },
     methods: {
         getDdragonVersion() {
-            fetch('/api/DD/api/versions.json')
+            fetch('http://127.0.0.1:8081/api/DD/api/versions.json')
             .then((response) => {
                 return response.json();
             }).then((data) => {
@@ -59,16 +59,16 @@ export default {
             if(this.summonerRegion!==undefined && this.summonerName!==undefined){
                 console.log(`API REQUEST BASIC SUMMONERINFOS -- ${this.summonerName}`)
                 //Request the summoner data from Riot
-                riotAPICall(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`,(dataSummoner) => {
+                riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`,(dataSummoner) => {
                     //If a summoner is found (status object is only return if no summoner was found)
                     if(dataSummoner.status===undefined){
                         //Store the summoner data
                         var parsedInfos = dataSummoner;
                         console.log(`API REQUEST ADVANSUMMONERINFOS -- ${this.summonerName}`)
                         //Request the mastery infos from Riot
-                        riotAPICall(`/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${parsedInfos.id}`,(dataMasteries) => {
+                        riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${parsedInfos.id}`,(dataMasteries) => {
                             //Request the list of champion from Data Dragon (no limit on the number of call so we don't use riotAPICall())
-                            fetch(`/api/DD/cdn/${this.ddragonVersion}/data/en_US/champion.json`)
+                            fetch(`http://127.0.0.1:8081/api/DD/cdn/${this.ddragonVersion}/data/en_US/champion.json`)
                             .then((champs) => {
                                 //Parse the API response
                                 return champs.json();
@@ -94,7 +94,7 @@ export default {
         sortChamps(){
             switch(this.sort){
                 case Sort.Level:
-                    this.champions.sort((a, b) => 
+                    this.champions.sort((a, b) =>
                         (a.mastery < b.mastery) ? //Primary sort by mastery level
                             1 :
                             (a.mastery === b.mastery) ? //Secondary sort by mastery points

@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     getDdragonVersion() {
-      fetch('/api/DD/api/versions.json')
+      fetch('http://127.0.0.1:8081/api/DD/api/versions.json')
       .then((response) => {
         return response.json();
       }).then((data) => {
@@ -47,7 +47,7 @@ export default {
     },
     getRotation(){
       if(this.summonerRegion != null)
-        riotAPICall(`/api/${this.summonerRegion}/lol/platform/v3/champion-rotations`, (dataRotation) => {
+        riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/platform/v3/champion-rotations`, (dataRotation) => {
           var freeChampionsIds = dataRotation.freeChampionIds
           var givenChampionsIds = dataRotation.freeChampionIdsForNewPlayers
           this.maxNewPlayerLevel = dataRotation.maxNewPlayerLevel

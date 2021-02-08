@@ -110,7 +110,7 @@ export default {
         console.log(`API REQUEST MATCHINFOS1 -- ${this.summonerName}`)
         globalAPIQueu.APIRequests += 1;
         setTimeout(()=>{
-          fetch(`/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
+          fetch(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
           .then((response) => {
             // The response is a Response instance.
             // You parse the data into a useable format using `.json()`
@@ -121,7 +121,7 @@ export default {
             console.log(`API REQUEST MATCHINFOS2 -- ${data.id}`)
             globalAPIQueu.APIRequests += 1;
             setTimeout(()=>{
-              fetch(`/api/${this.summonerRegion}/lol/spectator/v4/active-games/by-summoner/${data.id}`)
+              fetch(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/spectator/v4/active-games/by-summoner/${data.id}`)
               .then((matchResponse) => {
                 // The response is a Response instance.
                 // You parse the data into a useable format using `.json()`
