@@ -82,7 +82,8 @@
 
 <script>
 import summonerInfos from './summonerInfos.vue'
-import {globalAPIQueu,summonerCredentials} from '../main.js'
+import {riotAPICall} from '../library.js'
+import {summonerCredentials} from '../main.js'
 
 export default {
   name: 'matchInfos',
@@ -113,38 +114,17 @@ export default {
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
         this.summonersNamesRed = [];
         this.summonersNamesBlue = [];
-        console.log(`API REQUEST MATCHINFOS1 -- ${this.summonerName}`)
-        globalAPIQueu.APIRequests += 1;
-        setTimeout(()=>{
-          fetch(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`)
-          .then((response) => {
-            // The response is a Response instance.
-            // You parse the data into a useable format using `.json()`
-            globalAPIQueu.APIRequests -= 1;
-            return response.json();
-          }).then((data) => {
-            // `data` is the parsed version of the JSON returned from the above endpoint.
-            console.log(`API REQUEST MATCHINFOS2 -- ${data.id}`)
-            globalAPIQueu.APIRequests += 1;
-            setTimeout(()=>{
-              fetch(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/spectator/v4/active-games/by-summoner/${data.id}`)
-              .then((matchResponse) => {
-                // The response is a Response instance.
-                // You parse the data into a useable format using `.json()`
-                globalAPIQueu.APIRequests -= 1;
-                return matchResponse.json();
-              }).then((matchData) => {
-                // `data` is the parsed version of the JSON returned from the above endpoint.
-                matchData.participants.forEach((participant) => {
-                  if(participant.teamId === 100)
-                    this.summonersNamesBlue.push(participant.summonerName);
-                  else
-                    this.summonersNamesRed.push(participant.summonerName);
-                })
-              });
-            }, 50*globalAPIQueu.APIRequests);
-          });
-        }, 50*globalAPIQueu.APIRequests);
+        console.log(`API REQUEST MATCHINFOS1 -- ${this.summonerName}`);
+        riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`,(data) => {
+          riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/spectator/v4/active-games/by-summoner/${data.id}`,(matchData) => {
+              matchData.participants.forEach((participant) => {
+                if(participant.teamId === 100)
+                  this.summonersNamesBlue.push(participant.summonerName);
+                else
+                  this.summonersNamesRed.push(participant.summonerName);
+              })
+            });
+        });
       }
     }
   },
