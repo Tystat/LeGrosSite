@@ -10,7 +10,7 @@
               <b-icon icon="list" font-scale="2"></b-icon>
             </b-col>
           </b-button>
-            <b-sidebar id="sidebar-no-header" :backdrop-variant="transparent" backdrop no-header>
+            <b-sidebar id="sidebar-no-header" backdrop no-header>
               <template #default="{hide}">
                 <b-nav vertical>
                   <b-nav-item active @click="hide">
