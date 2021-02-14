@@ -114,7 +114,6 @@ export default {
       if(this.summonerRegion!==undefined && this.summonerName!==undefined){
         this.summonersNamesRed = [];
         this.summonersNamesBlue = [];
-        console.log(`API REQUEST MATCHINFOS1 -- ${this.summonerName}`);
         riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`,(data) => {
           riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/spectator/v4/active-games/by-summoner/${data.id}`,(matchData) => {
               matchData.participants.forEach((participant) => {

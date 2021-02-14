@@ -151,14 +151,12 @@ export default {
         //Clear the bestChamps and ranks if any are stored
         this.bestChamps = [];
         this.ranks = {RANKED_FLEX_SR:{},RANKED_SOLO_5x5:{}};
-        console.log(`API REQUEST BASIC SUMMONERINFOS -- ${this.summonerName}`)
         //Request the summoner data from Riot
         riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/summoner/v4/summoners/by-name/${this.summonerName}`,(dataSummoner) => {
           //If a summoner is found (status object is only return if no summoner was found)
           if(dataSummoner.status===undefined){
             //Store the summoner data
             this.parsedInfos = dataSummoner;
-            console.log(`API REQUEST ADVANSUMMONERINFOS -- ${this.summonerName}`)
             //Request the mastery infos from Riot
             riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/champion-mastery/v4/champion-masteries/by-summoner/${this.parsedInfos.id}`,(dataMasteries) => {
               //Request the list of champion from Data Dragon (no limit on the number of call so we don't use riotAPICall())
