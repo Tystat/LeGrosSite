@@ -96,10 +96,6 @@
 
     </b-card>
   </div>
-  <!--If there is no infos to display-->
-  <div v-else>
-    Veuillez entrez un nom d'invocateur valide pour la région choisie
-  </div>
 
 </template>
 

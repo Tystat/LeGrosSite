@@ -17,9 +17,6 @@
       </b-card-body>
     </b-card>
   </div>
-  <div v-else>
-    Waiting for a summoner to provide champions rotation
-  </div>
 </template>
 
 <script>
