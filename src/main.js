@@ -13,6 +13,15 @@ export const globalAPIQueu = new Vue({
   }
 })
 
+// Store the summoner name and region to be used by all the others
+// components
+export const summonerCredentials = new Vue({
+  data: {
+    summonerName: undefined,
+    summonerRegion: undefined
+  }
+})
+
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue)

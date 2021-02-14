@@ -14,7 +14,7 @@
               <template #default="{hide}">
                 <b-nav vertical>
                   <b-nav-item active @click="hide">
-                    <router-link :to="{name: 'infos', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
+                    <router-link :to="{name: 'infos'}"
                       class="nav-link bg-light btn btn-outline-secondary">
                       <div class="h3"> Infos </div>
                     </router-link>
@@ -22,7 +22,7 @@
                   <!--</li>
                   <li class="nav-item">-->
                   <b-nav-item @click="hide">
-                    <router-link :to="{name: 'match', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
+                    <router-link :to="{name: 'match'}"
                       class="nav-link bg-light btn btn-outline-secondary" >
                       <div class="h3"> Match </div>
                     </router-link>
@@ -30,16 +30,16 @@
                   <b-nav-item @click="hide">
                   <!--</li>
                   <li class="navbar-item">-->
-                    <router-link :to="{name: 'masteries', params: { summonerRegion: summonerRegion, summonerName: summonerName }}"
+                    <router-link :to="{name: 'masteries'}"
                       class="nav-link bg-light btn btn-outline-secondary">
                       <div class="h3"> Maîtrises </div>
                     </router-link>
                   </b-nav-item>
                   <!--</li>-->
-                  
+
                 </b-nav>
               </template>
-              
+
               <template #footer="{ hide }">
                 <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
                   <div id="Credits">
@@ -53,14 +53,13 @@
             </b-Sidebar>
         </div>
       </b-col>
-      
+
       <!-- Body -->
       <b-col cols="12">
         <MainPage />
-        <summonerForm 
-          @formCompleted="updateSummonerInfos"/>
+        <summonerForm/>
         <router-view/>
-        <champion-rotation :summonerRegion="summonerRegion" />
+        <champion-rotation/>
       </b-col>
     </b-row>
   </div>
@@ -77,8 +76,6 @@ export default {
   name: 'App',
   data: function() {
     return {
-      summonerName: null,
-      summonerRegion: null
     }
   },
   components: {
@@ -87,10 +84,6 @@ export default {
     championRotation
   },
   methods: {
-    updateSummonerInfos(e) {
-      this.summonerName = e.summonerName;
-      this.summonerRegion = e.summonerRegion;
-    }
   },
 }
 </script>

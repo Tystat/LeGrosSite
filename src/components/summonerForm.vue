@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import {summonerCredentials} from '../main.js'
+
 
 export default {
   name: 'summonerForm',
@@ -42,7 +44,8 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
-      this.$emit('formCompleted', {summonerName:this.summoner_name,summonerRegion:this.summoner_region})
+      summonerCredentials.summonerName = this.summoner_name;
+      summonerCredentials.summonerRegion = this.summoner_region;
     }
   }
 }

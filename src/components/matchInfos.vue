@@ -3,36 +3,36 @@
     <b-row no-gutters>
             <b-col no-gutters>
               <summonerInfos
-                :summonerName="summonersNamesBlue[0]"
-                :summonerRegion="summonerRegion"
+                :customSummonerName="summonersNamesBlue[0]"
+                :customSummonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
             <b-col no-gutters>
               <summonerInfos
-                :summonerName="summonersNamesBlue[1]"
-                :summonerRegion="summonerRegion"
+                :customSummonerName="summonersNamesBlue[1]"
+                :customSummonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
             <b-col no-gutters>
               <summonerInfos
-                :summonerName="summonersNamesBlue[2]"
-                :summonerRegion="summonerRegion"
+                :customSummonerName="summonersNamesBlue[2]"
+                :customSummonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
             <b-col no-gutters>
               <summonerInfos
-                :summonerName="summonersNamesBlue[3]"
-                :summonerRegion="summonerRegion"
+                :customSummonerName="summonersNamesBlue[3]"
+                :customSummonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
             <b-col no-gutters>
               <summonerInfos
-                :summonerName="summonersNamesBlue[4]"
-                :summonerRegion="summonerRegion"
+                :customSummonerName="summonersNamesBlue[4]"
+                :customSummonerRegion="summonerRegion"
                 color="primary"
               />
             </b-col>
@@ -40,36 +40,36 @@
           <b-row>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNamesRed[0]"
-                  :summonerRegion="summonerRegion"
+                  :customSummonerName="summonersNamesRed[0]"
+                  :customSummonerRegion="summonerRegion"
                   color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNamesRed[1]"
-                  :summonerRegion="summonerRegion"
+                  :customSummonerName="summonersNamesRed[1]"
+                  :customSummonerRegion="summonerRegion"
                   color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNamesRed[2]"
-                  :summonerRegion="summonerRegion"
+                  :customSummonerName="summonersNamesRed[2]"
+                  :customSummonerRegion="summonerRegion"
                   color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNamesRed[3]"
-                  :summonerRegion="summonerRegion"
+                  :customSummonerName="summonersNamesRed[3]"
+                  :customSummonerRegion="summonerRegion"
                   color="danger"
                 />
               </b-col>
               <b-col>
                 <summonerInfos
-                  :summonerName="summonersNamesRed[4]"
-                  :summonerRegion="summonerRegion"
+                  :customSummonerName="summonersNamesRed[4]"
+                  :customSummonerRegion="summonerRegion"
                   color="danger"
                 />
               </b-col>
@@ -82,7 +82,7 @@
 
 <script>
 import summonerInfos from './summonerInfos.vue'
-import {globalAPIQueu} from '../main.js'
+import {globalAPIQueu,summonerCredentials} from '../main.js'
 
 export default {
   name: 'matchInfos',
@@ -99,6 +99,12 @@ export default {
     //To detect if either has changed
     summonerNameAndRegion: function (){
       return(this.summonerName+this.summonerRegion);
+    },
+    summonerName: function(){
+      return(summonerCredentials.summonerName);
+    },
+    summonerRegion: function(){
+      return(summonerCredentials.summonerRegion);
     }
   },
   methods: {
@@ -152,8 +158,6 @@ export default {
     }
   },
   props: {
-    summonerName: String,
-    summonerRegion: String
   }
 }
 </script>

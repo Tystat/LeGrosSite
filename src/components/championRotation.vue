@@ -24,6 +24,7 @@
 
 <script>
 import { riotAPICall } from '../library'
+import {summonerCredentials} from '../main.js'
 
 export default {
   name: 'championRotation',
@@ -32,7 +33,13 @@ export default {
       freeChampions: [],
       givenChampions: [],
       maxNewPlayerLevel: 0,
-      ddragonVersion: "11.2.1"
+      ddragonVersion: undefined
+    }
+  },
+  computed: {
+    summonerRegion: function(){
+      //If a custom summoner region is given we use it, else we use the current summoner credentials
+      return(summonerCredentials.summonerRegion);
     }
   },
   methods: {
@@ -46,12 +53,12 @@ export default {
       });
     },
     getRotation(){
-      if(this.summonerRegion != null)
+      if(this.summonerRegion != undefined)
         riotAPICall(`http://127.0.0.1:8081/api/${this.summonerRegion}/lol/platform/v3/champion-rotations`, (dataRotation) => {
           var freeChampionsIds = dataRotation.freeChampionIds
           var givenChampionsIds = dataRotation.freeChampionIdsForNewPlayers
           this.maxNewPlayerLevel = dataRotation.maxNewPlayerLevel
-          fetch(`/api/DD/cdn/${this.ddragonVersion}/data/en_US/champion.json`)
+          fetch(`http://127.0.0.1:8081/api/DD/cdn/${this.ddragonVersion}/data/en_US/champion.json`)
             .then((champs) => {
               return champs.json();
             }).then((dataChampions) => {
@@ -74,8 +81,8 @@ export default {
     }
   },
   mounted(){
-    this.getRotation(),
-    this.getDdragonVersion()
+    this.getDdragonVersion();
+    this.getRotation();
   },
   watch: {
     summonerRegion: function() {
@@ -83,7 +90,6 @@ export default {
     }
   },
   props: {
-    summonerRegion: String
   }
 }
 </script>

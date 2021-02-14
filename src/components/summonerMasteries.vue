@@ -19,8 +19,8 @@
 </template>
 
 <script>
-
 import {riotAPICall} from '../library.js'
+import {summonerCredentials} from '../main.js'
 
 const Sort = {
     Level: 0,
@@ -42,6 +42,14 @@ export default {
         //To detect if either has changed
         summonerNameAndRegion: function (){
             return(this.summonerName+this.summonerRegion);
+        },
+        summonerName: function(){
+          //If a custom summoner name is given we use it, else we use the current summoner credentials
+          return(summonerCredentials.summonerName);
+        },
+        summonerRegion: function(){
+          //If a custom summoner region is given we use it, else we use the current summoner credentials
+          return(summonerCredentials.summonerRegion);
         }
     },
     methods: {
@@ -125,8 +133,6 @@ export default {
         }
     },
     props: {
-        summonerName: String,
-        summonerRegion: String,
     }
 }
 </script>

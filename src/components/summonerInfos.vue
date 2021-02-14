@@ -105,7 +105,7 @@
 
 <script>
 import {riotAPICall} from '../library.js'
-
+import {summonerCredentials} from '../main.js'
 
 export default {
   name: 'summonerInfos',
@@ -114,7 +114,7 @@ export default {
       parsedInfos: undefined,
       bestChamps: [],
       ranks: {"RANKED_FLEX_SR":{},"RANKED_SOLO_5x5":{}},
-      ddragonVersion: 0
+      ddragonVersion: 0,
     }
   },
   computed: {
@@ -126,6 +126,14 @@ export default {
       var date = new Date(this.parsedInfos.revisionDate);
       return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()-2000}`;
     },
+    summonerName: function(){
+      //If a custom summoner name is given we use it, else we use the current summoner credentials
+      return(this.customSummonerName ? this.customSummonerName : summonerCredentials.summonerName);
+    },
+    summonerRegion: function(){
+      //If a custom summoner region is given we use it, else we use the current summoner credentials
+      return(this.customSummonerRegion ? this.customSummonerRegion : summonerCredentials.summonerRegion);
+    }
   },
   methods: {
     getDdragonVersion() {
@@ -208,9 +216,9 @@ export default {
     }
   },
   props: {
-    summonerName: String,
-    summonerRegion: String,
-    color: String
+    color: String,
+    customSummonerName: String,
+    customSummonerRegion: String,
   }
 }
 </script>
